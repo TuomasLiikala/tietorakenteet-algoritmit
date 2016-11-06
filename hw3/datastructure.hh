@@ -1,0 +1,96 @@
+// Definition of Datastructure class for UDS/Tiraka homework 2 trie.
+//
+#ifndef DATASTRUCTURE_HH
+# define DATASTRUCTURE_HH
+
+enum Gender { MALE, FEMALE };
+
+enum Relation {INVALID_ID, RELATED, NOT_RELATED };
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <unordered_map>
+
+// SEPARATOR is recommended to use when printing contents of the data
+// structure
+const char SEPARATOR = ' ';
+
+struct Person
+{
+  int ID;
+  Gender gender;
+  std::string name;
+  int born;
+  int dead;
+  std::vector<Person*> parents; // mother fathers
+  std::vector<Person*> partners;
+  std::vector<Person*> children;
+};
+
+typedef std::unordered_map<int, Person> Mymap;
+
+class Datastructure
+{
+
+ public:
+
+   Datastructure();
+
+   ~Datastructure();
+
+   // Returns true if word was added and false otherwise.
+  bool add(Gender gender, std::string& name, int ID, int born, 
+	     int died);
+
+    //Adds ID1 and ID2 as partners
+    bool addPartner(int ID1, int ID2);
+    
+    //Adds a child to the given people
+    bool addChild(int IDChild, int IDwoman, int IDman);
+    
+    //Checks if the two people are related
+    Relation relation(int ID1, int ID2);
+   
+    //Empties the data structure
+    void remove();
+   
+    //Prints the family tree
+    void print(int ID);
+
+   // Returns true if word was removed and false otherwise.
+   bool remove(std::string& word);
+
+   // Returns true if word was found and false otherwise.
+   bool search(std::string& word);
+
+   // Solves and returns amount of words in datastructure.
+   unsigned int amountOfWords();
+
+   // Empties the datastructure.
+   void empty();
+
+   // Prints contents of the data structure.
+   void print();
+
+   Mymap c1; 
+
+ private:
+  void print(Person *TreePerson, int tabs);
+
+   // Copy constructor is forbidden
+   //Datastructure(const Datastructure&);
+   // Assignment operator is forbidden
+   //Datastructure& operator=(const Datastructure&);
+
+  Person *PartnerFirst;// = new Person;
+  Person *PartnerSecond;// = new Person;
+   
+  Person *Father;// = new Person;
+  Person *Mother;// = new Person;
+  Person *Child;// = new Person;
+
+   
+};
+
+#endif
